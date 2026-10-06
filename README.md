@@ -76,6 +76,23 @@ java -jar target/led-matrix-visuals.jar
 `target/` is build output and is git-ignored. The curated final visuals live in
 `gallery/` and are committed.
 
+## Interactive preview UI
+
+A small Swing desktop app lets you preview the scenes live and adapt an uploaded
+image to the 64x64 matrix, then export — no device required.
+
+```powershell
+$env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot"; $env:PATH = "$env:JAVA_HOME\bin;C:\Users\emili\tools\apache-maven-3.9.9\bin;$env:PATH"; mvn -q compile exec:java -Dexec.mainClass=com.devoxx.led.ui.PreviewUI
+```
+
+- **Scenes list** — play any built-in scene live, scaled 8x (512x512) with
+  nearest-neighbor upscaling so individual LEDs stay crisp.
+- **Upload image** — load a PNG/JPG/BMP/GIF; it is resized to 64x64 with a
+  **letterbox** or **crop-to-square** fit, and an optional **LED posterize**
+  treatment (2–8 levels per channel) so photos read as deliberate LED pixel art.
+- **Export** — writes a 64x64 looping GIF (scenes) or a PNG (uploaded still) into
+  `target/visuals/`, ready to submit.
+
 ## Project layout
 
 ```
@@ -88,7 +105,9 @@ src/main/java/com/devoxx/led/
   core/     Rgb, Frame, Canvas, PixelFont   drawing primitives
   gif/      GifEncoder, MedianCutQuantizer  pure-Java GIF89a + quantizer
   png/      PngWriter                       ImageIO PNG writer
+  image/    ImageAdapter                    resize + LED-posterize uploads to 64x64
   scene/    Scene + the four themed scenes
+  ui/       PreviewUI                       Swing live preview + upload + export
   verify/   VisualVerifier                  64x64 / <=1MB / frames>1 checks
   Main.java                                 render -> verify -> publish pipeline
 ```
