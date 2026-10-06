@@ -1,0 +1,12 @@
+# Build output
+target/
+
+# IDE
+.idea/
+*.iml
+
+# Compiled class files
+*.class
+
+# Workflow artifacts (must never be committed)
+.agents/
