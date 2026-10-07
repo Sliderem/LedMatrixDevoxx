@@ -1,5 +1,6 @@
 # Build output
 target/
+dependency-reduced-pom.xml
 
 # IDE
 .idea/
@@ -10,3 +11,13 @@ target/
 
 # Workflow artifacts (must never be committed)
 .agents/
+
+# Secrets / local config (never commit real keys)
+.env
+config.txt
+
+# Scratch
+sandbox/
+
+# Locally generated / saved images (keep good ones in gallery/ instead)
+generated/

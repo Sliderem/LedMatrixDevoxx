@@ -12,14 +12,36 @@
     <name>Devoxx LED Matrix Visuals</name>
     <description>Pure-JDK Java 21 generator for 64x64 RGB LED matrix GIF/PNG visuals (Pixoo 64).</description>
 
+    <!--
+      The core generator (Main) is pure JDK. The optional JavaFX UI
+      (com.devoxx.led.ui.PreviewFx) adds the OpenJFX dependencies below;
+      they are only needed to run the GUI, not to generate visuals.
+    -->
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <exec.mainClass>com.devoxx.led.Main</exec.mainClass>
+        <javafx.version>21.0.5</javafx.version>
     </properties>
 
-    <!-- Zero runtime dependencies: pure JDK. JUnit is test-scoped only. -->
     <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- SwingFXUtils bridges a java.awt BufferedImage to a JavaFX Image. -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -49,6 +71,16 @@
                 <version>3.5.0</version>
                 <configuration>
                     <mainClass>com.devoxx.led.Main</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- Run the JavaFX UI: mvn -q javafx:run -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>com.devoxx.led.ui.PreviewFx</mainClass>
                 </configuration>
             </plugin>
 
